@@ -2,29 +2,38 @@ const express = require('express');
 const app = express();
 const PORTA = 3000;
 
-//Recurso: Produtos
+const produtos = [{id:1, nome: "Produto 1", preco: 30}];
 
+app.use(express.json());
+
+//Recurso: Produtos
 app.get('/produtos', (req, res) => {
-    res.send("Listagem de Produtos");
+    res.json(produtos);
 })
 
 app.get('/produtos/:id', (req,res) => {
     const id = req.params.id;
-    res.send(`Buscar pelo id: ${id}`);
+    console.log("Get ID: ", id);
+    res.json(produtos[0]);
 })
 
 app.post('/produtos', (req, res) => {
-    res.send("Cadastrar Produto");
+    //res.send("Cadastrar Produto");
+    const produto = req.body;
+    produto.id=2;
+    res.status(201).json(produto);
 })
 
 app.put('/produtos/:id', (req,res) => {
     const id = req.params.id;
-    res.send(`Atualizar o produto com id: ${id}`);
+    console.log("UPDATE: ",id)
+    res.json(produtos[0]);
 })
 
 app.delete('/produtos/:id', (req,res) => {
     const id = req.params.id;
-    res.send(`Deletar o produto com id: ${id}`);
+    console.log("DELETE: ",id)
+    res.json(produtos[0]);
 })
 
 app.listen(PORTA, () => {
